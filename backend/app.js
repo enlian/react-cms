@@ -3,15 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-var authRouter = require('./routes/auth'); // 引入新的 auth 路由
+var loginRouter = require('./routes/login'); // 引入新的 auth 路由
 
 var app = express();
-
-app.use('/api/auth', authRouter); // 使用 auth 路由
+// 使用 CORS 中间件
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/', loginRouter); // 使用 auth 路由
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
