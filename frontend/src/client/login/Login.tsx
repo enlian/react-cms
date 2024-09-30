@@ -7,7 +7,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const credentials = { username, password };
+    const credentials = { name:username, password };
 
     // 向后端发送 POST 请求
     try {
