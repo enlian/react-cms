@@ -4,26 +4,30 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-const { connectToDatabase, closeConnection } = require('./config/database');
+const mongoose = require('mongoose');
+
+const { connectToDatabase, closeConnection } = require('./config/mongoDBdatabase');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login'); // 引入新的 auth 路由
+var loginRouter = require('./routes/login');
+var registerRouter = require('./routes/register');
 
 var app = express();
 // 使用 CORS 中间件
 app.use(cors());
 
-//连接数据库
-app.get('/ping', async (req, res) => {
+// 立即执行 MongoDB 连接和 ping 检查
+const checkMongoDBConnection = async () => {
   try {
     const client = await connectToDatabase(); // 连接或获取现有连接
-    await client.db("admin").command({ ping: 1 });
-    res.status(200).send("Successfully connected to MongoDB!");
   } catch (error) {
-    res.status(500).send("Error connecting to MongoDB.");
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1); // 如果连接失败，退出进程
   }
-});
+};
+
+checkMongoDBConnection(); // 调用检查连接的函数
 
 // 在应用关闭时关闭数据库连接
 process.on('SIGINT', async () => {
@@ -44,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api/', loginRouter); // 使用 auth 路由
+app.use('/api/', [loginRouter,registerRouter]); // 使用 auth 路由
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
