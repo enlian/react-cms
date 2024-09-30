@@ -4,9 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-const mongoose = require('mongoose');
 
-const { connectToDatabase, closeConnection } = require('./config/mongoDBdatabase');
+const pool = require('./dbConfig'); // 引入数据库配置
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -17,23 +17,14 @@ var app = express();
 // 使用 CORS 中间件
 app.use(cors());
 
-// 立即执行 MongoDB 连接和 ping 检查
-const checkMongoDBConnection = async () => {
-  try {
-    const client = await connectToDatabase(); // 连接或获取现有连接
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1); // 如果连接失败，退出进程
+
+// 测试连接
+pool.connect((err) => {
+  if (err) {
+      console.error('连接数据库失败:', err.stack);
+      return;
   }
-};
-
-checkMongoDBConnection(); // 调用检查连接的函数
-
-// 在应用关闭时关闭数据库连接
-process.on('SIGINT', async () => {
-  await closeConnection();
-  console.log("MongoDB connection closed.");
-  process.exit(0);
+  console.log('已连接到数据库');
 });
 
 // view engine setup
