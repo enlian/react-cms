@@ -7,11 +7,11 @@ const cors = require("cors");
 
 const {testConnection} = require("./dbConfig"); // 引入数据库配置
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-const authRoutes = require("./routes/auth"); // 引入认证路由
+const indexRouter = require("./routes/index");
+const apiRoutes = require('./routes/apiRoutes'); // 导入 apiRoutes
 
-var app = express();
+
+const app = express();
 
 // 测试数据库连接
 testConnection();
@@ -33,8 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/api", authRoutes); // 使用认证路由
+app.use("/api", apiRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

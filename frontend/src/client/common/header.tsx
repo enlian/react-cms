@@ -25,11 +25,11 @@ const Header = () => {
       ) : auth?.state.isLoggedIn ? (
         <div>
           <p>{auth?.state?.user?.name}</p>
-          <button onClick={handleLogout}>登出</button> {/* 登出按钮 */}
+          <button onClick={handleLogout}>logout</button> {/* 登出按钮 */}
         </div>
       ) : (
         <Link to="/login">
-          <button>登录</button> {/* 登录按钮 */}
+          <button>login</button> {/* 登录按钮 */}
         </Link>
       )}
     </div>

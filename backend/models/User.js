@@ -10,9 +10,9 @@ let User;
 if (!sequelize.models.User) {
     User = sequelize.define('User', {
         id: {
-            type: DataTypes.STRING, // 改为字符串类型
-            primaryKey: true,
-            defaultValue: uuidv4, // 使用 uuid 生成唯一 ID
+            type: DataTypes.INTEGER, // 更改为整数类型
+            autoIncrement: true, // 设置为自增
+            primaryKey: true, // 设为主键
         },
         name: {
             type: DataTypes.STRING,

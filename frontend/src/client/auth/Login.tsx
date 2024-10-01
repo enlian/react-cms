@@ -30,7 +30,7 @@ const Login = () => {
         // 保存 token 到 localStorage
         localStorage.setItem("token", data.token);
         // 调用 context 中的 login 方法
-        auth?.login();
+        auth?.login(data.user);
       } else {
         // 登录失败
         alert(data.message || "Login failed");

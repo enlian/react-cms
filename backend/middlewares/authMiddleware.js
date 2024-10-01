@@ -11,22 +11,27 @@ const validateToken = async (req, res, next) => {
     }
 
     jwt.verify(token, secretKey, async (err, decoded) => {
-        if (err) {
+        console.log("Received Token:", token,secretKey);
+
+        if (err) {            
             return res.status(403).json({ message: '无效的 token' });
         }
 
         try {
-            const userId = decoded.userId;
-            const user = await User.findOne({ where: { id: userId } });
+            const id = decoded.id;
+            const user = await User.findOne({ where: { id: id } });
 
             if (!user) {
                 return res.status(404).json({ message: '用户不存在' });
             }
 
-            // 将用户信息添加到请求对象中
+            // 将用户信息存储在请求中，以便后续中间件或处理程序使用
             req.user = user;
+            res.status(200).json({
+                message: 'token 验证成功',
+                user: user, // 直接使用中间件中设置的用户信息
+            });
 
-            next(); // 继续执行下一个中间件或路由处理程序
         } catch (dbError) {
             console.error('数据库查询失败:', dbError);
             res.status(500).json({ message: '数据库查询失败' });
