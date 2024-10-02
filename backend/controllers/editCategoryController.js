@@ -10,11 +10,11 @@ exports.editCategory = async (req, res) => {
             return res.status(201).json({ message: '分类添加成功', category: newCategory });
         } else if (action === 'update') {
             // 更新已有的分类
-            const updatedCategory = await Category.update(
+            const [updatedRows] = await Category.update(
                 { name, link, parentId },
                 { where: { id } }
             );
-            if (updatedCategory[0] === 0) {
+            if (updatedRows === 0) {
                 return res.status(404).json({ message: '分类未找到' });
             }
             return res.status(200).json({ message: '分类更新成功' });

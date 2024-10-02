@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useTasks, useTasksDispatch } from "./TasksContext";
+import { useTasks, useTasksDispatch } from "./ArticleContext";
 
 //Task子组件
-export function Task({ task }) {
+export function Article({ task }) {
     const [isEditing, setIsEditing] = useState(false);
     const dispatch = useTasksDispatch();
     let taskContent;
@@ -37,20 +37,7 @@ export function Task({ task }) {
       );
     }
     return (
-      <label>
-        <input
-          type="checkbox"
-          checked={task.done}
-          onChange={(e) => {
-            dispatch({
-              type: "changed",
-              task: {
-                ...task,
-                done: e.target.checked,
-              },
-            });
-          }}
-        />
+      <div className="article-item">
         {taskContent}
         <button
           onClick={() => {
@@ -60,6 +47,6 @@ export function Task({ task }) {
             });
           }}
         >删除</button>
-      </label>
+      </div>
     );
   }

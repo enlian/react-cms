@@ -1,16 +1,26 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { CategoriesContext } from "../contexts/CategoriesContext";
-import "../../assets/header.scss"; // 导入 scss 文件
+import "../../assets/header.scss";
 
-export default function Navbar() {
+export default function Header() {
   const auth = useContext(AuthContext);
   const { categories } = useContext(CategoriesContext);
+  const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(null);
 
   const handleLogout = () => {
     auth?.logout();
   };
+
+  // 根据 parentId 归类子分类
+  const categorizedSubcategories = categories.reduce((acc: { [key: number]: any[] }, category) => {
+    if (category.parentId) {
+      acc[category.parentId] = acc[category.parentId] || [];
+      acc[category.parentId].push(category);
+    }
+    return acc;
+  }, {});
 
   return (
     <nav>
@@ -21,20 +31,25 @@ export default function Navbar() {
         <li>
           <Link to={"/editCategory"}>Edit Category</Link>
         </li>
-        {categories.map((category) => (
-          <li key={category.id}>
-            <Link to={category.link}>{category.name}</Link>
-            {category.subcategories && category.subcategories.length > 0 && (
-              <ul>
-                {category.subcategories.map((subcategory) => (
-                  <li key={subcategory.id}>
-                    <Link to={subcategory.link}>{subcategory.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
+        {categories
+          .filter((category) => !category.parentId) // 只显示主栏目
+          .map((category) => (
+            <li key={category.id}
+                onMouseEnter={() => setExpandedCategoryId(category.id)}
+                onMouseLeave={() => setExpandedCategoryId(null)} // 隐藏子栏目
+            >
+              <Link to={category.link}>{category.name}</Link>
+              {expandedCategoryId === category.id && categorizedSubcategories[category.id]?.length > 0 && (
+                <ul>
+                  {categorizedSubcategories[category.id].map((subcategory) => (
+                    <li key={subcategory.id}>
+                      <Link to={subcategory.link}>{subcategory.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
       </ul>
 
       <div className="auth-container">

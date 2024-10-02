@@ -5,14 +5,7 @@ export interface Category {
   id: number;
   name: string;
   link: string;
-  subcategories: Subcategory[];
-}
-
-export interface Subcategory {
-  id: number;
-  name: string;
-  link: string;
-  parentId: number;
+  parentId: number | null; // Use parentId to indicate if it's a subcategory
 }
 
 // 创建上下文
@@ -42,7 +35,7 @@ export const CategoriesProvider: React.FC<{ children: React.ReactNode }> = ({
       }
       const result = await response.json();
       const data: Category[] = result.categories;
-      setCategories(data);
+      setCategories(data); // Assuming data is already in one-dimensional array format
     } catch (error) {
       console.error("Failed to fetch categories:", error);
     } finally {

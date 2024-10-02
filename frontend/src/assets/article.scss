@@ -1,0 +1,18 @@
+#article-box{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 20px;
+
+    .article-item{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+}
+
+.add-article{
+    display: flex;
+}
+

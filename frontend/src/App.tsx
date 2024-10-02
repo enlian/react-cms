@@ -1,7 +1,7 @@
 // App.js
 import React, { Component, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Index from "./client/index/Index";
+import Index from "./client/article/article";
 import Login from "./client/auth/Login";
 import Register from "./client/auth/Register";
 import { AuthProvider } from "./client/contexts/AuthContext";

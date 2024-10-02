@@ -1,30 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CategoriesContext } from "./../client/contexts/CategoriesContext";
-import "../assets/EditCategory.scss";
+import "../assets/editCategory.scss";
 
 const EditCategory: React.FC = () => {
   const { categories, setCategories } = useContext(CategoriesContext);
-  const [newCategory, setNewCategory] = useState({ name: "", link: "" });
-  const [editCategory, setEditCategory] = useState<any>(null);
-  const [subCategory, setSubCategory] = useState({
+  const [newCategory, setNewCategory] = useState({
     name: "",
     link: "",
     parentId: null,
   });
-  const [isModalOpen, setIsModalOpen] = useState(false); // 控制弹出框的显示
-
-  useEffect(() => {
-    if (editCategory) {
-      setNewCategory({
-        name: editCategory.name || "",
-        link: editCategory.link || "",
-      }); // 确保输入框有默认值
-      setSubCategory({ parentId: editCategory.id });
-    } else {
-      // 如果没有编辑类别，清空输入框
-      setNewCategory({ name: "", link: "" });
-    }
-  }, [editCategory]);
+  const [modalData, setModalData] = useState<{
+    id: number;
+    name: string;
+    link: string;
+    parentId: number | null;
+  } | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEditCategory = async (
     id: number,
@@ -36,37 +27,14 @@ const EditCategory: React.FC = () => {
     try {
       const response = await fetch("http://localhost:3000/api/editCategory", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, name, link, parentId, action }),
       });
       const data = await response.json();
 
       if (response.ok) {
         if (action === "add") {
-          if (parentId) {
-            // 如果是子栏目，找到对应的父栏目，并添加到父栏目的 subcategories 中
-            setCategories((prevCategories) =>
-              prevCategories.map((category) =>
-                category.id === parentId
-                  ? {
-                      ...category,
-                      subcategories: [
-                        ...(category.subcategories || []),
-                        data.category,
-                      ],
-                    }
-                  : category
-              )
-            );
-          } else {
-            // 如果是父栏目，直接添加到顶层
-            setCategories((prevCategories) => [
-              ...prevCategories,
-              data.category,
-            ]);
-          }
+          setCategories((prevCategories) => [...prevCategories, data.category]);
         } else if (action === "update") {
           setCategories((prevCategories) =>
             prevCategories.map((category) =>
@@ -89,21 +57,15 @@ const EditCategory: React.FC = () => {
   };
 
   const handleAddSubCategory = async () => {
-    if (subCategory.name && subCategory.link && subCategory.parentId) {
-      const newSubCategory = {
-        name: subCategory.name,
-        link: subCategory.link,
-        parentId: subCategory.parentId,
-      };
-
+    if (newCategory.name && newCategory.link) {
       await handleEditCategory(
         0,
-        newSubCategory.name,
-        newSubCategory.link,
-        newSubCategory.parentId,
+        newCategory.name,
+        newCategory.link,
+        newCategory.parentId || null,
         "add"
       );
-      setSubCategory({ name: "", link: "", parentId: null });
+      setNewCategory({ name: "", link: "", parentId: null });
     }
   };
 
@@ -112,24 +74,32 @@ const EditCategory: React.FC = () => {
   };
 
   const handleSaveEdit = async () => {
-    if (editCategory) {
+    if (modalData) {
       await handleEditCategory(
-        editCategory.id,
-        newCategory.name,
-        newCategory.link,
-        null,
+        modalData.id,
+        modalData.name,
+        modalData.link,
+        modalData.parentId,
         "update"
       );
       setIsModalOpen(false);
-      setEditCategory(null);
+      setModalData(null);
     }
+  };
+
+  const openEditModal = (category: any) => {
+    setModalData({
+      id: category.id,
+      name: category.name,
+      link: category.link,
+      parentId: category.parentId,
+    });
+    setIsModalOpen(true);
   };
 
   return (
     <div>
-      <h2>栏目编辑</h2>
-
-      <h3>添加父栏目</h3>
+      <h5>添加栏目</h5>
       <input
         type="text"
         placeholder="栏目名称"
@@ -146,116 +116,89 @@ const EditCategory: React.FC = () => {
           setNewCategory({ ...newCategory, link: e.target.value })
         }
       />
-      <button
-        onClick={() =>
-          handleEditCategory(0, newCategory.name, newCategory.link, null, "add")
-        }
-      >
-        添加父栏目
-      </button>
-
-      <h3>添加子栏目</h3>
-      <input
-        type="text"
-        placeholder="子栏目名称"
-        value={subCategory.name}
-        onChange={(e) =>
-          setSubCategory({ ...subCategory, name: e.target.value })
-        }
-      />
-      <input
-        type="text"
-        placeholder="子栏目链接"
-        value={subCategory.link}
-        onChange={(e) =>
-          setSubCategory({ ...subCategory, link: e.target.value })
-        }
-      />
       <select
-        value={subCategory.parentId || ""}
+        value={newCategory.parentId || ""}
         onChange={(e) =>
-          setSubCategory({ ...subCategory, parentId: Number(e.target.value) })
+          setNewCategory({ ...newCategory, parentId: Number(e.target.value) })
         }
       >
-        <option value="">选择父栏目</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
+        <option value="">选择父栏目（可选）</option>
+        {categories
+          .filter((category) => category.parentId === null)
+          .map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
       </select>
-      <button onClick={handleAddSubCategory}>添加子栏目</button>
+      <button onClick={handleAddSubCategory}>添加栏目</button>
 
-      <h3>栏目列表</h3>
+      <h5>栏目列表</h5>
       <div className="categories-list">
-        {categories.map((category) => (
-          <div className="category" key={category.id}>
-            <span>{category.name}</span>
-            <button
-              onClick={() => {
-                setEditCategory(category);
-                setIsModalOpen(true);
-              }}
-            >
-              编辑
-            </button>
-            <button onClick={() => handleDeleteCategory(category.id)}>
-              删除
-            </button>
-            {category.subcategories && category.subcategories.length > 0 ? (
-              category.subcategories.map((sub) => (
-                <div key={sub.id} className="sub-category">
-                  <span>{sub.name}</span>
-                  <button
-                    onClick={() => {
-                      setEditCategory(sub);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    编辑
-                  </button>
-                  <button onClick={() => handleDeleteCategory(sub.id)}>
-                    删除
-                  </button>
-                </div>
-              ))
-            ) : (
-              <span className="noSonText">没有子栏目</span>
-            )}
-          </div>
-        ))}
+        {categories
+          .filter((category) => category.parentId === null)
+          .map((category) => (
+            <div className="category" key={category.id}>
+              <span>{category.name}</span>
+              <button onClick={() => openEditModal(category)}>编辑</button>
+              <button onClick={() => handleDeleteCategory(category.id)}>
+                删除
+              </button>
+
+              {/* Display subcategories */}
+              <div className="subcategories">
+                {categories
+                  .filter((sub) => sub.parentId === category.id)
+                  .map((sub) => (
+                    <div
+                      key={sub.id}
+                      className="sub-category subcategory-container"
+                    >
+                      <div className="subcategory-arrow"></div>{" "}
+                      {/* Arrow element */}
+                      <span>{sub.name}</span>
+                      <button onClick={() => openEditModal(sub)}>编辑</button>
+                      <button onClick={() => handleDeleteCategory(sub.id)}>
+                        删除
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
       </div>
 
-      {isModalOpen && (
-        <div className="modal">
-          <h3>编辑栏目</h3>
-          <input
-            type="text"
-            placeholder="栏目名称"
-            value={newCategory.name}
-            onChange={(e) =>
-              setNewCategory({ ...newCategory, name: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="栏目链接"
-            value={newCategory.link}
-            onChange={(e) =>
-              setNewCategory({ ...newCategory, link: e.target.value })
-            }
-          />
-          <button onClick={handleSaveEdit}>保存</button>
-          <button
-            onClick={() => {
-              setIsModalOpen(false);
-              setEditCategory(null);
-            }}
-          >
-            取消
-          </button>
-        </div>
-      )}
+      {isModalOpen &&
+        modalData && ( // 确保 modalData 存在
+          <div className="modal">
+            <h5>编辑栏目</h5>
+            <input
+              type="text"
+              placeholder="栏目名称"
+              value={modalData.name}
+              onChange={(e) =>
+                setModalData({ ...modalData, name: e.target.value })
+              } // 更新 modalData
+            />
+            <input
+              type="text"
+              placeholder="栏目链接"
+              value={modalData.link}
+              onChange={(e) =>
+                setModalData({ ...modalData, link: e.target.value })
+              } // 更新 modalData
+            />
+            <button onClick={handleSaveEdit}>保存</button>
+            <button
+              onClick={() => {
+                setIsModalOpen(false);
+                setModalData(null);
+              }}
+            >
+              取消
+            </button>
+          </div>
+        )}
     </div>
   );
 };

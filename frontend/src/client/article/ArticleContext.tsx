@@ -1,8 +1,8 @@
 import { createContext, useContext, useReducer } from 'react';
 const initialTasks = [
-  { id: 0, text: '做饭', done: true },
-  { id: 1, text: '扫地', done: false },
-  { id: 2, text: '买菜', done: false }
+  { id: 0, text: '做饭'},
+  { id: 1, text: '扫地'},
+  { id: 2, text: '买菜'}
 ];
 // 创建上下文
 const TasksContext = createContext(null);
@@ -18,7 +18,6 @@ function tasksReducer(tasks, action) {
       return [...tasks, {
         id: action.id,
         text: action.text,
-        done: false
       }];
     }
     case 'changed': {

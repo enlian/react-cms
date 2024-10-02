@@ -15,7 +15,6 @@ button {
 .category {
   display: flex;
   align-items: center;
-  height: 30px;
   border-bottom: 1px solid lightgray; /* 添加浅灰色的底边框 */
   padding:10px 0 10px 0;
 }
@@ -24,13 +23,27 @@ button {
   margin-bottom: 10px;
   background-color: #f0f8ff; /* 设置背景色 */
   border-radius: 5px; /* 可选：设置圆角 */
-  margin-left: 20px;
+  margin-left: 30px;
   margin-top: 5px;
   font-size: smaller;
   display: flex; /* 使用 flexbox 布局 */
   align-items: center;
   height: 30px;
   padding: 0 10px 0 10px;
+}
+
+.subcategory-arrow {
+  width: 0;
+  height: 0;
+  border-left: 10px solid red; /* Arrow color */
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  margin-right: 5px; /* Space between arrow and text */
+}
+
+.subcategory-container {
+  display: flex;
+  align-items: center; /* Align arrow and text vertically */
 }
 
 .noSonText {
@@ -48,29 +61,4 @@ button {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-}
-
-.edit-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000; // 确保弹出框在其他元素之上
-}
-
-.edit-modal h3 {
-  margin: 0 0 10px;
-}
-
-.edit-modal input {
-  display: block;
-  margin-bottom: 10px;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
