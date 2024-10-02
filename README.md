@@ -4,13 +4,11 @@ A CMS (Content Management System) based on React, featuring a rich text editor f
 
 ## Main Features
 - **Registration and Login** JWT Authentication
-- **Article Management** Create, edit, and delete articles using a rich text editor.
+- **Article Management** Create, edit, and delete articles, using a rich text editor.
 - **Category and Subcategory Management** Create, edit, and delete categories and subcategories.
 - **Article Attachment** Link articles to categories or subcategories.
 <br>
 ---
-<br>
-
 The front-end interface follows a pure data flow with complete logic and interaction. Minimal CSS styles have been applied to facilitate customization or further development based on design specifications.
 <br>
 
