@@ -12,8 +12,7 @@ A CMS (Content Management System) based on React, featuring a rich text editor f
 <br>
 
 The front-end interface follows a pure data flow with complete logic and interaction. Minimal CSS styles have been applied to facilitate customization or further development based on design specifications.
-
----
+<br>
 
 ## Usage Instructions
 
@@ -23,8 +22,7 @@ cd backend
 npm i
 npm run dev
 ```
-#### Configuration file 
-config/.env
+Configuration file location: config/.env
 
 
 ### Frontend
