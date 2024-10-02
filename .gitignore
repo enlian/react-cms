@@ -2,3 +2,4 @@ backend/config/database.js
 backend/config/.env
 backend/config/mongoDBdatabase.js
 backend/config/mongo.env
+.vscode
