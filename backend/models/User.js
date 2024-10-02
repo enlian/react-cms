@@ -1,6 +1,5 @@
 // models/User.js
 const { Sequelize, DataTypes } = require('sequelize');
-const { v4: uuidv4 } = require('uuid'); // 引入 uuid 库
 const pool = require('../dbConfig'); // 引入数据库配置
 
 const sequelize = new Sequelize(process.env.POSTGRES_URL); // 使用环境变量连接数据库

@@ -1,0 +1,41 @@
+#root {
+  display: flex;
+  flex-direction: column; /* 让子元素垂直排列 */
+  justify-content: flex-start; /* 从上往下排列 */
+  align-items: center; /* 水平居中 */
+  height: 100vh; /* 占满整个视口高度 */
+  padding: 20px; /* 可选，给容器添加一些内边距 */
+  box-sizing: border-box; /* 包括内边距和边框在内的总宽高 */
+}
+
+a {
+  text-decoration: none; /* 去掉下划线 */
+  color: black; /* 设置文字颜色为黑色 */
+}
+
+/* 如果想要在悬停时改变颜色，可以添加如下样式 */
+a:hover {
+  color: gray; /* 悬停时颜色变化，您可以根据需要调整 */
+}
+
+button {
+    display: flex; /* 将按钮设置为 Flexbox 容器 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中（可选） */
+    height: 30px; /* 设置按钮高度 */
+    padding: 0 10px; /* 设置水平内边距 */
+    border: 1px solid lightgray; /* 设置边框 */
+    border-radius: 5px; /* 设置圆角 */
+    background-color: white; /* 设置背景颜色 */
+  }
+  
+  /* 如果想要在悬停时改变背景颜色，可以添加如下样式 */
+  button:hover {
+    background-color: #f0f0f0; /* 悬停时背景颜色变化，您可以根据需要调整 */
+  }
+
+  li {
+    display: flex; /* 将 li 设置为 Flexbox 容器 */
+    align-items: center; /* 垂直居中 */
+    height: 40px; /* 设置一个高度，以便进行垂直居中 */
+  }

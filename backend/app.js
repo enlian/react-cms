@@ -4,11 +4,10 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
-
-const {testConnection} = require("./dbConfig"); // 引入数据库配置
-
+const categoryRoutes = require('./routes/categoryRoutes');
 const indexRouter = require("./routes/index");
 const apiRoutes = require('./routes/apiRoutes'); // 导入 apiRoutes
+const {testConnection} = require("./dbConfig"); // 引入数据库配置
 
 
 const app = express();
@@ -33,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/api", apiRoutes);
+app.use("/api", [apiRoutes,categoryRoutes]);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
