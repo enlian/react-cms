@@ -22,7 +22,7 @@ cd backend
 npm i
 npm run dev
 ```
-Configuration file location: config/.env
+Backend configuration file location: backend/config/.env
 
 
 ### Frontend
