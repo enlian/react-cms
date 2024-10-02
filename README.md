@@ -2,7 +2,7 @@
 
 A CMS (Content Management System) based on React, featuring a rich text editor for content editing.
 
-## Main Features:
+## Main Features
 - **Registration and Login (JWT Authentication)**
 - **Article Management:** Create, edit, and delete articles using a rich text editor.
 - **Category and Subcategory Management:** Create, edit, and delete categories and subcategories.
@@ -23,6 +23,9 @@ cd backend
 npm i
 npm run dev
 ```
+#### Configuration file 
+config/.env
+
 
 ### Frontend
 ```bash
