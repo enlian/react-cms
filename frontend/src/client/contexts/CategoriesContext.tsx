@@ -1,13 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 
 // 定义数据类型
-export interface Subcategory {
-  id: number;
-  name: string;
-  link: string;
-  parentId: number;
-}
-
 export interface Category {
   id: number;
   name: string;
@@ -15,11 +8,18 @@ export interface Category {
   subcategories: Subcategory[];
 }
 
+export interface Subcategory {
+  id: number;
+  name: string;
+  link: string;
+  parentId: number;
+}
+
 // 创建上下文
 export const CategoriesContext = createContext<
   | {
       categories: Category[];
-      setCategories: React.Dispatch<React.SetStateAction<Category[]>>; // 添加 setCategories
+      setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
       isLoading: boolean;
     }
   | undefined
@@ -56,7 +56,9 @@ export const CategoriesProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <CategoriesContext.Provider value={{ categories, setCategories, isLoading }}>
+    <CategoriesContext.Provider
+      value={{ categories, setCategories, isLoading }}
+    >
       {children}
     </CategoriesContext.Provider>
   );
