@@ -8,7 +8,7 @@ A CMS (Content Management System) based on React, featuring a rich text editor f
 - **Category and Subcategory Management** Create, edit, and delete categories and subcategories.
 - **Article Attachment** Link articles to categories or subcategories.
 <br>
----
+
 The front-end interface follows a pure data flow with complete logic and interaction. Minimal CSS styles have been applied to facilitate customization or further development based on design specifications.
 <br>
 
