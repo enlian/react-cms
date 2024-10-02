@@ -3,10 +3,10 @@
 A CMS (Content Management System) based on React, featuring a rich text editor for content editing.
 
 ## Main Features
-- **Registration and Login (JWT Authentication)**
-- **Article Management:** Create, edit, and delete articles using a rich text editor.
-- **Category and Subcategory Management:** Create, edit, and delete categories and subcategories.
-- **Article Attachment:** Link articles to categories or subcategories.
+- **Registration and Login** JWT Authentication
+- **Article Management** Create, edit, and delete articles using a rich text editor.
+- **Category and Subcategory Management** Create, edit, and delete categories and subcategories.
+- **Article Attachment** Link articles to categories or subcategories.
 <br>
 ---
 <br>
