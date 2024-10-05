@@ -1,14 +1,13 @@
-import { useState } from "react";
-import { useTasks, useTasksDispatch } from "./ArticleContext";
-import { Task } from "./Tast";
+import { useArticles } from "./ArticleContext";
+import { Article } from "./article";
 
-// 使用上下文的组件，Task List列表
-export default function TaskList() {
-  const tasks = useTasks();
+// 使用上下文的组件，Article List列表
+export default function ArticleList() {
+  const articles = useArticles();
   return (
     <>
-      {tasks.map((task) => (
-        <Task key={task.id} task={task} />
+      {articles.map((article) => (
+        <Article key={article.id} article={article} />
       ))}
     </>
   );

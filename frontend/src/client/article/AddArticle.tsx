@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useTasksDispatch } from './ArticleContext';
+import { useArticlesDispatch } from './ArticleContext';
 
-export default function AddTask() {
+export default function AddArticle() {
   const [text, setText] = useState('');
-  const dispatch = useTasksDispatch();
+  const dispatch = useArticlesDispatch();
   return (
     <div className='add-article'>
       <input
-        placeholder="添加任务"
+        placeholder="add article"
         value={text}
         onChange={e => setText(e.target.value)}
       />
@@ -18,7 +18,7 @@ export default function AddTask() {
           id: nextId++,
           text: text,
         }); 
-      }}>添加</button>
+      }}>Add</button>
     </div>
   );
 }
