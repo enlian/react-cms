@@ -57,7 +57,7 @@ export function ArticlesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await fetch("http://localhost:3000/api/articles", {
+        const response = await fetch("/api/articles", {
           method: "POST", // 使用 POST 请求
           headers: {
             "Content-Type": "application/json",

@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const token = localStorage.getItem("token");
     if (token) {
       // 验证 token 的有效性
-      fetch("http://localhost:3000/api/validate-token", {
+      fetch("/api/validate-token", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

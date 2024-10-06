@@ -29,7 +29,7 @@ export const CategoriesProvider: React.FC<{ children: React.ReactNode }> = ({
   // 模拟从服务端获取数据的函数
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/getCategories");
+      const response = await fetch("/api/getCategories");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
