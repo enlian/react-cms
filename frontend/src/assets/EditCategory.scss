@@ -1,64 +1,66 @@
-.categories-list {
-  display: flex; /* 将ul设置为flex容器 */
-  flex-direction: column; /* 设置主轴方向为纵向 */
-  padding: 0; /* 移除默认内边距 */
-  margin: 0; /* 移除默认外边距 */
-  list-style-type: none; /* 移除默认列表样式 */
-}
+.edit-category {
+  .categories-list {
+    display: flex; /* 将ul设置为flex容器 */
+    flex-direction: column; /* 设置主轴方向为纵向 */
+    padding: 0; /* 移除默认内边距 */
+    margin: 0; /* 移除默认外边距 */
+    list-style-type: none; /* 移除默认列表样式 */
+  }
 
-button {
-  font-size: 10px;
-  height: 20px !important;
-  margin-left: 10px;
-}
+  button {
+    font-size: 10px;
+    height: 20px !important;
+    margin-left: 10px;
+  }
 
-.category {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid lightgray; /* 添加浅灰色的底边框 */
-  padding:10px 0 10px 0;
-}
+  .category {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray; /* 添加浅灰色的底边框 */
+    padding: 10px 0 10px 0;
+  }
 
-.sub-category {
-  margin-bottom: 10px;
-  background-color: #f0f8ff; /* 设置背景色 */
-  border-radius: 5px; /* 可选：设置圆角 */
-  margin-left: 30px;
-  margin-top: 5px;
-  font-size: smaller;
-  display: flex; /* 使用 flexbox 布局 */
-  align-items: center;
-  height: 30px;
-  padding: 0 10px 0 10px;
-}
+  .sub-category {
+    margin-bottom: 10px;
+    background-color: #f0f8ff; /* 设置背景色 */
+    border-radius: 5px; /* 可选：设置圆角 */
+    margin-left: 30px;
+    margin-top: 5px;
+    font-size: smaller;
+    display: flex; /* 使用 flexbox 布局 */
+    align-items: center;
+    height: 30px;
+    padding: 0 10px 0 10px;
+  }
 
-.subcategory-arrow {
-  width: 0;
-  height: 0;
-  border-left: 10px solid red; /* Arrow color */
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  margin-right: 5px; /* Space between arrow and text */
-}
+  .subcategory-arrow {
+    width: 0;
+    height: 0;
+    border-left: 10px solid red; /* Arrow color */
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    margin-right: 5px; /* Space between arrow and text */
+  }
 
-.subcategory-container {
-  display: flex;
-  align-items: center; /* Align arrow and text vertically */
-}
+  .subcategory-container {
+    display: flex;
+    align-items: center; /* Align arrow and text vertically */
+  }
 
-.noSonText {
-  font-size: 10px;
-  color: #666;
-  margin-left: 10px;
-}
+  .noSonText {
+    font-size: 10px;
+    color: #666;
+    margin-left: 10px;
+  }
 
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
 }

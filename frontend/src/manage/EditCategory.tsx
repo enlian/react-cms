@@ -98,7 +98,7 @@ const EditCategory: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="edit-category">
       <h5>添加栏目</h5>
       <input
         type="text"

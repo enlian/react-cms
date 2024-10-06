@@ -1,23 +1,20 @@
-import { createContext, useContext, useReducer, ReactNode } from "react";
+import { createContext, useContext, useReducer, useEffect, ReactNode } from "react";
 
 // 定义 Article 类型
 interface Article {
-  id: number;
-  text: string;
+  id: number; //从数据库获取，自增
+  title: string;
+  content: string;
+  cover: string; //封面
+  categoryId: number; //关联的栏目id
 }
 
 // 定义 Action 类型
 type Action =
-  | { type: "added"; id: number; text: string }
+  | { type: "added"; article: Article }
   | { type: "changed"; article: Article }
-  | { type: "deleted"; id: number };
-
-// 定义初始数据
-const initialArticles: Article[] = [
-  { id: 0, text: "做饭" },
-  { id: 1, text: "扫地" },
-  { id: 2, text: "买菜" },
-];
+  | { type: "deleted"; id: number }
+  | { type: "set"; articles: Article[] }; // 新增动作类型，初始化文章列表
 
 // 创建上下文
 const ArticlesContext = createContext<Article[] | null>(null);
@@ -29,10 +26,10 @@ const ArticlesDispatchContext = createContext<React.Dispatch<Action> | null>(
 function articlesReducer(articles: Article[], action: Action): Article[] {
   switch (action.type) {
     case "added": {
-      if (!action.text) {
+      if (!action.article.title || !action.article.content) {
         return articles;
       }
-      return [...articles, { id: action.id, text: action.text }];
+      return [...articles, action.article];
     }
     case "changed": {
       return articles.map((t) =>
@@ -42,6 +39,9 @@ function articlesReducer(articles: Article[], action: Action): Article[] {
     case "deleted": {
       return articles.filter((t) => t.id !== action.id);
     }
+    case "set": {
+      return action.articles; // 初始化文章列表
+    }
     default: {
       throw new Error("Unknown action: " + action.type);
     }
@@ -50,7 +50,28 @@ function articlesReducer(articles: Article[], action: Action): Article[] {
 
 // 提供者组件
 export function ArticlesProvider({ children }: { children: ReactNode }) {
-  const [articles, dispatch] = useReducer(articlesReducer, initialArticles);
+  const [articles, dispatch] = useReducer(articlesReducer, []);
+
+  // 使用 useEffect 从 API 拉取数据
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        const response = await fetch("http://localhost:3000/api/articles", {
+          method: "POST", // 使用 POST 请求
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: "user-token" }), // 可以在这里传递 token
+        });
+        const data = await response.json();
+        dispatch({ type: "set", articles: data }); // 初始化文章列表
+      } catch (error) {
+        console.error("Failed to fetch articles:", error);
+      }
+    }
+
+    fetchArticles();
+  }, []); // 空依赖数组表示只在组件挂载时执行
 
   return (
     <ArticlesContext.Provider value={articles}>

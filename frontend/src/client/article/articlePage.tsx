@@ -1,6 +1,6 @@
-import AddArticle from "./AddArticle";
+import AddArticle from "./addArticle";
 import ArticleList from "./articleList";
-import { ArticlesProvider } from "./ArticleContext";
+import { ArticlesProvider } from "../contexts/articleContext";
 import "../../assets/article.scss"
 
 function Index() {
