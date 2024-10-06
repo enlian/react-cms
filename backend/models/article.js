@@ -26,6 +26,11 @@ const Article = sequelize.define(
       allowNull: true, // 可以为空
       field: "category_id", // 指定数据库中对应的字段名
     },
+    userId:{
+        type: DataTypes.INTEGER,
+        allowNull: false, // 不能为空
+        field: "user_id",
+    }
   },
   {
     timestamps: false, // 关闭自动创建 createdAt 和 updatedAt 字段

@@ -7,6 +7,7 @@ interface Article {
   content: string;
   cover: string; //封面
   categoryId: number; //关联的栏目id
+  userId:number //作者id
 }
 
 // 定义 Action 类型
