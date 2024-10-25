@@ -1,96 +1,45 @@
-# React 複利計算機
+## CMS Project - React, Express, PostgreSQL
 
-このプロジェクトは、**React** を使用して構築されたシンプルな複利計算機です。ユーザーは、元本、利率、複利の頻度、および投資期間に基づいて、時間の経過とともに得られる潜在的な利益を計算できます。
+A content management system (CMS) based on React. The front-end uses react.js, the back-end uses express.js (models, controllers, and middlewares are developed separately), and the database uses postgres. The content editor uses a rich text editor.
 
-## 概要
+### Main functions:
+- **Register and log in** JSON Web Token authentication
+- **Article list** Get the article list based on the user ID, and get the article list based on the column ID.
+- **Article management** Use a rich text editor to publish articles, edit and delete articles. Articles include title, content, cover image, and author information.
+- **Column/sub-column management** Create, edit and delete columns and sub-columns.
+- **Article mounting** Mount articles to columns or sub-columns.
+<br><br>
+The front-end interface is pure data flow, with complete logic and interaction. No third-party UI components are used, which is convenient for later custom styles or secondary development based on the design draft.
+<br>
 
-この複利計算機は、ユーザーが投資に対して複利を使用してどれだけの利益を得ることができるかを推定するのに役立ちます。Reactで構築されており、シンプルで使いやすいデザインになっています。
+## Usage Instructions
 
-## 機能
-
-- 以下に基づいて複利を計算します：
-  - 初期投資額（元本）
-  - 年間利率
-  - 年間の複利回数
-  - 投資期間（年）
-- 入力値が変更されるとリアルタイムで結果を更新
-- シンプルでユーザーフレンドリーなインターフェース
-
-## 技術スタック
-
-- **フロントエンド**: React
-- **スタイリング**: （スタイリングツールを追加、例：CSS、Sass など）
-- **状態管理**: React Hooks
-
-## インストール
-
-リポジトリをクローン：
-
+### Backend
 ```bash
-git clone https://github.com/yourusername/react-compound-calculator.git
-cd react-compound-calculator
+cd backend
+npm i
+npm run dev
+```
+Backend configuration file location: backend/config/.env
+
+
+### Frontend
+```bash
+cd frontend
+npm i 
+npm run dev
 ```
 
-依存関係をインストール：
+---
+<br>
+基于 React 的内容管理系统 (CMS)，前端使用react.js，后端采用express.js（models、controllers、middlewares分离开发），数据库采用postgres
+内容编辑器采用富文本编辑器。
 
-```bash
-npm install
-```
-
-React 開発サーバーを起動：
-
-```bash
-npm start
-```
-
-アプリは `http://localhost:3000` で利用可能になります。
-
-### プロダクションビルド：
-
-プロダクションビルドを作成するには、以下のコマンドを実行します：
-
-```bash
-npm run build
-```
-
-これにより、最適化されたビルドが `build/` ディレクトリに作成され、デプロイの準備が整います。
-
-## 使い方
-
-開発サーバーを起動した後、ブラウザで `http://localhost:3000` にアクセスします。
-
-以下のデータを入力します：
-- **元本**: 投資予定の初期金額
-- **年間利率**: 投資の利率（パーセンテージ）
-- **複利頻度**: 複利が適用される頻度（例：年次、四半期ごと、毎月）
-- **投資期間**: 投資予定の年数
-
-計算機は指定された期間の総残高と得られた利息を自動的に計算します。
-
-## 計算式
-
-複利は以下の式で計算されます：
-
-\[ A = P \left(1 + \frac{r}{n}\right)^{nt} \]
-
-- **A** = 利息を含めた将来の投資価値
-- **P** = 元本投資額（初期投資額）
-- **r** = 年間利率（小数）
-- **n** = 年間の複利回数
-- **t** = 投資または借入期間の年数
-
-## 例
-
-例えば、$1000 を年間 5% の利率で、毎月複利で 10 年間投資すると、計算式は次のようになります：
-
-\[ A = 1000 \left(1 + \frac{0.05}{12}\right)^{12 \times 10} \]
-
-これにより、10 年後の総残高は約 $1647.01 となります。
-
-## 貢献
-
-貢献は大歓迎です！問題をオープンしたり、プルリクエストを送ったり、新しい機能の提案を自由に行ってください。
-
-## ライセンス
-
-このプロジェクトは MIT ライセンスの下でライセンスされています。詳細は LICENSE ファイルを参照してください。
+### 主要功能：
+- **注册登录** JSON Web Token 认证
+- **文章列表** 根据用户id获取文章列表，根据栏目id获取文章列表。
+- **文章管理** 使用富文本编辑器发布文章，编辑和删除文章，文章包含标题、内容、封面图、作者信息。
+- **栏目/子栏目管理** 创建、编辑和删除栏目和子栏目。
+- **文章挂载** 将文章挂载到栏目或子栏目。
+<br><br>
+前端界面纯数据流，逻辑和交互齐全，未采用第三方UI组件，方便后期根据设计稿自定义样式或二次开发。
