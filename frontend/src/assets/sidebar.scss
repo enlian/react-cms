@@ -8,3 +8,9 @@
   padding-top: 2;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
+
+.selectedItem {
+    background-color: #d4d4d4 !important; // 自定义选中背景色
+    color: #1976d2; // 自定义选中文本颜色
+    font-weight: bold;
+  }

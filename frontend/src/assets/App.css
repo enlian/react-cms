@@ -26,3 +26,7 @@ body{
     margin-top: auto; /* 使登录/登出按钮固定在侧边栏底部 */
   }
   
+ a{
+    color: inherit;
+    text-decoration: none;  
+  }
