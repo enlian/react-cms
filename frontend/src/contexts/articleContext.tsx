@@ -30,7 +30,7 @@ function articlesReducer(articles: Article[], action: Action): Article[] {
       if (!action.article.title || !action.article.content) {
         return articles;
       }
-      return [...articles, action.article];
+      return [action.article, ...articles];
     }
     case "changed": {
       return articles.map((t) =>

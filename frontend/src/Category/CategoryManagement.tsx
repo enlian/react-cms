@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CategoriesContext } from "./../client/contexts/CategoriesContext";
+import { CategoriesContext } from "../contexts/CategoriesContext";
 import "../assets/editCategory.scss";
 
 const EditCategory: React.FC = () => {

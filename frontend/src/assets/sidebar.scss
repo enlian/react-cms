@@ -1,0 +1,10 @@
+.sidebar {
+  width: 250px; // 固定侧边栏宽度
+  height: 100vh; // 占满整个屏幕高度
+  background-color: #f5f5f5; // 背景颜色
+  display: flex;
+  position: fixed;
+  flex-direction:column;
+  padding-top: 2;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,28 @@
+/* 全局布局，侧边栏在左，主内容在右 */
+body{
+    padding: 0;
+    margin: 0;
+}
+#root{
+    padding: 0;
+    margin: 0;
+}
+.app-layout {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .main-content {
+    flex-grow: 1; /* 主内容区域会自适应填满剩余空间 */
+    overflow-y: auto; /* 如果内容超过页面高度，则启用滚动 */
+    margin-left: 260px;
+  }
+  
+  nav {
+    height: 100%;
+  }
+  
+  .auth-container {
+    margin-top: auto; /* 使登录/登出按钮固定在侧边栏底部 */
+  }
+  
