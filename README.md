@@ -1,45 +1,74 @@
-## CMS Project - React, Express, PostgreSQL
+# CMS プロジェクト - React, Express, PostgreSQL
 
-A content management system (CMS) based on React. The front-end uses react.js, the back-end uses express.js (models, controllers, and middlewares are developed separately), and the database uses postgres. The content editor uses a rich text editor.
+このプロジェクトは **React** を使用して開発されたコンテンツ管理システム (CMS) です。フロントエンドには **React.js**、バックエンドには **Express.js**（モデル、コントローラー、ミドルウェアはそれぞれ分離して開発）、データベースには **PostgreSQL** を使用しています。コンテンツエディターにはリッチテキストエディターを使用しており、直感的で操作性の高いコンテンツ管理を実現しています。
 
-### Main functions:
-- **Register and log in** JSON Web Token authentication
-- **Article list** Get the article list based on the user ID, and get the article list based on the column ID.
-- **Article management** Use a rich text editor to publish articles, edit and delete articles. Articles include title, content, cover image, and author information.
-- **Column/sub-column management** Create, edit and delete columns and sub-columns.
-- **Article mounting** Mount articles to columns or sub-columns.
-<br><br>
-The front-end interface is pure data flow, with complete logic and interaction. No third-party UI components are used, which is convenient for later custom styles or secondary development based on the design draft.
-<br>
+## 主な機能
 
-## Usage Instructions
+### 1. ユーザー登録・ログイン (JSON Web Token 認証)
+ユーザーは新規登録を行い、ログイン後に JSON Web Token (JWT) 認証を使用してセッションを管理します。これにより、セキュアな認証とユーザー管理が可能です。
 
-### Backend
-```bash
-cd backend
-npm i
-npm run dev
-```
-Backend configuration file location: backend/config/.env
+### 2. 記事リスト管理
+- ユーザーIDに基づく記事リスト取得: 各ユーザーのIDに基づいて、該当するユーザーが投稿した記事のリストを取得します。
+- カテゴリIDに基づく記事リスト取得: 記事が属するカテゴリ（またはサブカテゴリ）に基づいて、該当するカテゴリ内の記事リストを取得します。
 
+### 3. 記事管理機能
+- **リッチテキストエディターを使用した記事作成**: 富文本エディターにより、タイトル、コンテンツ、カバー画像、著者情報を含む記事を簡単に作成できます。
+- **記事の編集・削除**: 既存の記事を編集または削除することができます。
+  
+これらの機能により、ユーザーは簡単にコンテンツを管理し、柔軟に編集・削除操作を行えます。
 
-### Frontend
-```bash
-cd frontend
-npm i 
-npm run dev
-```
+### 4. カテゴリおよびサブカテゴリの管理
+- **カテゴリ作成・編集・削除**: 新しいカテゴリやサブカテゴリを作成し、それらの情報を編集・削除することができます。
+  
+これにより、コンテンツは明確に整理され、特定のカテゴリに分類された記事が簡単に見つけられるようになります。
 
----
-<br>
-基于 React 的内容管理系统 (CMS)，前端使用react.js，后端采用express.js（models、controllers、middlewares分离开发），数据库采用postgres
-内容编辑器采用富文本编辑器。
+### 5. 記事のカテゴリへのマウント
+- **記事のマウント**: 作成した記事をカテゴリまたはサブカテゴリにマウント（関連付け）する機能です。この機能により、記事がどのカテゴリに属しているかを明確にし、サイト内のコンテンツ構成を整理することが可能です。
 
-### 主要功能：
-- **注册登录** JSON Web Token 认证
-- **文章列表** 根据用户id获取文章列表，根据栏目id获取文章列表。
-- **文章管理** 使用富文本编辑器发布文章，编辑和删除文章，文章包含标题、内容、封面图、作者信息。
-- **栏目/子栏目管理** 创建、编辑和删除栏目和子栏目。
-- **文章挂载** 将文章挂载到栏目或子栏目。
-<br><br>
-前端界面纯数据流，逻辑和交互齐全，未采用第三方UI组件，方便后期根据设计稿自定义样式或二次开发。
+## フロントエンドの特徴
+- **データフローベースのインターフェース**: フロントエンドは完全なデータフローに基づいて設計されており、ロジックとインタラクションは一貫して操作可能です。
+- **第三者UIコンポーネント不使用**: UIライブラリやサードパーティー製のコンポーネントを使用していないため、デザインの柔軟性があり、デザインのカスタマイズや二次開発に最適です。デザイン原稿に基づいたスタイルの調整や、独自のテーマを簡単に実装できます。
+
+## 使用方法
+
+### バックエンド
+1. **バックエンドのディレクトリに移動**：
+
+   ```bash
+   cd backend
+   ```
+
+2. **依存関係のインストール**：
+
+   ```bash
+   npm i
+   ```
+
+3. **開発サーバーの起動**：
+
+   ```bash
+   npm run dev
+   ```
+
+   **バックエンドの設定ファイルの場所**: `backend/config/.env`
+
+### フロントエンド
+1. **フロントエンドのディレクトリに移動**：
+
+   ```bash
+   cd frontend
+   ```
+
+2. **依存関係のインストール**：
+
+   ```bash
+   npm i
+   ```
+
+3. **開発サーバーの起動**：
+
+   ```bash
+   npm run dev
+   ```
+
+このプロジェクトは、バックエンドに **Express.js** を使用し、コンテンツ管理の機能を提供します。フロントエンドは **React.js** で実装され、直感的なユーザーインターフェースと柔軟なスタイルカスタマイズをサポートします。データのフローやロジックは独立しており、効率的にコンテンツを管理できます。
