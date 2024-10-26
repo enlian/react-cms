@@ -15,9 +15,13 @@ import {
   FormControlLabel,
   Radio,
   Typography,
-  Box,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
   IconButton,
-  Grid
+  Divider,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -27,8 +31,15 @@ export function Article({ article }) {
   const [title, setTitle] = useState(article.title);
   const [content, setContent] = useState(article.content);
   const [cover, setCover] = useState(article.cover);
-  const [selectedCategory, setSelectedCategory] = useState(article.categoryId || "");
-  const [errors, setErrors] = useState({ title: "", content: "", cover: "", category: "" });
+  const [selectedCategory, setSelectedCategory] = useState(
+    article.categoryId || ""
+  );
+  const [errors, setErrors] = useState({
+    title: "",
+    content: "",
+    cover: "",
+    category: "",
+  });
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -41,14 +52,15 @@ export function Article({ article }) {
     setErrorMessage("");
   };
 
-  const validateCoverUrl = (url) => /^(http:\/\/|https:\/\/).*\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(url);
+  const validateCoverUrl = (url) =>
+    /^(http:\/\/|https:\/\/).*\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(url);
 
   const handleTitleChange = (e) => {
     const value = e.target.value;
     setTitle(value);
     setErrors((prev) => ({
       ...prev,
-      title: value.length > 10 ? "" : "标题必须超过10个字"
+      title: value.length > 10 ? "" : "标题必须超过10个字",
     }));
   };
 
@@ -57,7 +69,7 @@ export function Article({ article }) {
     setContent(value);
     setErrors((prev) => ({
       ...prev,
-      content: value.length > 10 ? "" : "内容必须超过10个字"
+      content: value.length > 10 ? "" : "内容必须超过10个字",
     }));
   };
 
@@ -68,7 +80,7 @@ export function Article({ article }) {
       ...prev,
       cover: validateCoverUrl(value)
         ? ""
-        : "封面图URL无效，请以http或https开头，并确保链接包含有效的图片格式后缀"
+        : "封面图URL无效，请以http或https开头，并确保链接包含有效的图片格式后缀",
     }));
   };
 
@@ -76,15 +88,24 @@ export function Article({ article }) {
     setSelectedCategory(Number(e.target.value));
     setErrors((prev) => ({
       ...prev,
-      category: ""
+      category: "",
     }));
   };
 
   const handleSave = async () => {
-    if (!title || !content || !cover || !selectedCategory || errors.title || errors.content || errors.cover || errors.category) {
+    if (
+      !title ||
+      !content ||
+      !cover ||
+      !selectedCategory ||
+      errors.title ||
+      errors.content ||
+      errors.cover ||
+      errors.category
+    ) {
       setErrors((prev) => ({
         ...prev,
-        category: selectedCategory ? "" : "请选择一个栏目"
+        category: selectedCategory ? "" : "请选择一个栏目",
       }));
       return;
     }
@@ -94,22 +115,22 @@ export function Article({ article }) {
       title,
       content,
       cover,
-      category_id: selectedCategory
+      category_id: selectedCategory,
     };
 
     const response = await fetch(`/api/articles/${article.id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedArticle)
+      body: JSON.stringify(updatedArticle),
     });
 
     if (response.ok) {
       const updatedArticleFromServer = await response.json();
       dispatch({
         type: "changed",
-        article: updatedArticleFromServer
+        article: updatedArticleFromServer,
       });
       setSuccessMessage("文章更新成功！");
       setSnackbarOpen(true);
@@ -122,13 +143,13 @@ export function Article({ article }) {
 
   const handleDelete = async () => {
     const response = await fetch(`/api/articles/${article.id}`, {
-      method: "DELETE"
+      method: "DELETE",
     });
 
     if (response.ok) {
       dispatch({
         type: "deleted",
-        id: article.id
+        id: article.id,
       });
     } else {
       setErrorMessage("删除文章失败，请稍后再试！");
@@ -136,67 +157,65 @@ export function Article({ article }) {
     }
   };
 
-  const renderCategoryOptions = () => {
-    const parentCategories = categories.filter((category) => category.parentId === null);
-    const childCategories = categories.filter((category) => category.parentId !== null);
-
-    return (
-      <RadioGroup value={selectedCategory} onChange={handleCategoryChange}>
-        {parentCategories.map((parentCategory) => (
-          <Box key={parentCategory.id} sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <FormControlLabel value={parentCategory.id} control={<Radio />} label={parentCategory.name} />
-            <Box sx={{ display: "flex", ml: 4 }}>
-              {childCategories
-                .filter((childCategory) => childCategory.parentId === parentCategory.id)
-                .map((childCategory) => (
-                  <FormControlLabel
-                    key={childCategory.id}
-                    value={childCategory.id}
-                    control={<Radio />}
-                    label={childCategory.name}
-                    sx={{ mr: 2 }}
-                  />
-                ))}
-            </Box>
-          </Box>
-        ))}
-      </RadioGroup>
-    );
-  };
-
   return (
-    <Box sx={{ borderBottom: "1px solid #ddd", padding: 2, marginBottom: 2 }}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={4}>
-          <Typography variant="h6">{article.title}</Typography>
-          <Typography variant="body2" color="textSecondary">
-            {article.content}
-          </Typography>
-        </Grid>
+    <>
+      <ListItem alignItems="flex-start" sx={{margin:"10px 0 10px 0",paddingLeft:0}}>
+        {validateCoverUrl(article.cover) ? (
+          <img
+            src={validateCoverUrl(article.cover) ? article.cover : ""}
+            style={{
+              width: 120,
+              height: 60,
+              borderRadius: 5,
+              marginRight: 10,
+              objectFit: "cover",
+            }}
+          />
+        ) : null}
 
-        <Grid item xs={4}>
-          {validateCoverUrl(article.cover) && (
-            <Box
-              component="img"
-              sx={{ height: 140, width: "100%", objectFit: "cover" }}
-              alt={article.title}
-              src={article.cover}
-            />
-          )}
-        </Grid>
+        <ListItemText
+          primary={
+            <Typography
+              component="span"
+              variant="body1"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis", // 超出部分显示为省略号
+              }}
+            >
+              {article.title}
+            </Typography>
+          }
+          secondary={
+            <>
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{ color: "text.primary", display: "inline" }}
+              >
+                {article.content.slice(0, 100)}...
+              </Typography>
+            </>
+          }
+        />
+        <IconButton onClick={() => setIsEditing(true)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={handleDelete}>
+          <DeleteIcon />
+        </IconButton>
+      </ListItem>
+      <Divider
+        component="li"
+        sx={{
+          borderColor: "rgba(0, 0, 0, 0.12)",
+          borderBottomWidth: 1,
+          listStyleType: "none",
+        }}
+      />
 
-        <Grid item xs={4}>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <IconButton onClick={() => setIsEditing(true)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        </Grid>
-      </Grid>
-
+      {/* 编辑模态框 */}
       <Dialog
         open={isEditing}
         onClose={() => setIsEditing(false)}
@@ -244,7 +263,21 @@ export function Article({ article }) {
             请选择所属栏目
           </Typography>
           <FormControl fullWidth margin="dense">
-            {renderCategoryOptions()}
+            {categories.length && (
+              <RadioGroup
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+              >
+                {categories.map((category) => (
+                  <FormControlLabel
+                    key={category.id}
+                    value={category.id}
+                    control={<Radio />}
+                    label={category.name}
+                  />
+                ))}
+              </RadioGroup>
+            )}
           </FormControl>
         </DialogContent>
         <DialogActions>
@@ -252,7 +285,10 @@ export function Article({ article }) {
           <Button
             onClick={handleSave}
             disabled={
-              !!errors.title || !!errors.content || !!errors.cover || !selectedCategory
+              !!errors.title ||
+              !!errors.content ||
+              !!errors.cover ||
+              !selectedCategory
             }
           >
             保存
@@ -275,6 +311,6 @@ export function Article({ article }) {
           </Alert>
         )}
       </Snackbar>
-    </Box>
+    </>
   );
 }

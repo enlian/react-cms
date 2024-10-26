@@ -3,15 +3,22 @@ import { Article } from "./article";
 import { Typography, CircularProgress, Box } from "@mui/material";
 
 export default function ArticleList() {
-  const articles = useArticles();
+  const { isLoading, articles } = useArticles(); // 获取加载状态
 
-  // 假设 articles 是从上下文中异步获取的，可以根据数据是否存在来处理加载状态和错误
-  if (!articles) {
+  // 根据 isLoading 的值来显示加载动画或文章列表
+  if (isLoading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <CircularProgress />
       </Box>
-    ); // 如果文章数据为空，显示加载状态
+    ); // 如果处于加载状态，显示加载动画
   }
 
   if (articles.length === 0) {

@@ -15,7 +15,7 @@ body{
   .main-content {
     flex-grow: 1; /* 主内容区域会自适应填满剩余空间 */
     overflow-y: auto; /* 如果内容超过页面高度，则启用滚动 */
-    margin-left: 260px;
+    margin-left: 270px;
   }
   
   nav {

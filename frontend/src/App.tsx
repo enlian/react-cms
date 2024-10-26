@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,10 +12,23 @@ import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 import { CategoriesProvider, CategoriesContext } from "./contexts/CategoriesContext";
 import Sidebar from "./common/Sidebar";
 import CategoryManagement from "./Category/CategoryManagement";
+import { CircularProgress, Box } from "@mui/material"; // 引入 Material-UI 的加载组件
 import "./../src/assets/App.css"; // 引入CSS文件
+
+// 鉴权过程中显示加载的组件
+const Loading = () => (
+  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+    <CircularProgress />
+  </Box>
+);
 
 const PrivateRoute = ({ children }) => {
   const auth = useContext(AuthContext);
+
+  // 显示加载组件
+  if (auth?.state?.isLoading) {
+    return <Loading />;
+  }
 
   if (!auth?.state?.isLoggedIn) {
     return <Navigate to="/login" />;
@@ -51,6 +64,11 @@ export default function App() {
 // 把主要内容分离到 MainApp 组件内，以确保 useContext 可以正常使用
 function MainApp() {
   const auth = useContext(AuthContext);
+
+  // 显示加载状态
+  if (auth?.state?.isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="app-layout">
