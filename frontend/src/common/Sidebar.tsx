@@ -61,7 +61,7 @@ export default function Sidebar() {
           button
           component={Link}
           to="/personnelManagement"
-          className={isSelected("/personnelManagement"?"selectedItem":null)} // 选中状态
+          className={isSelected("/personnelManagement")?"selectedItem":null} // 选中状态
         >
           <ListItemIcon>
             <PeopleIcon />
