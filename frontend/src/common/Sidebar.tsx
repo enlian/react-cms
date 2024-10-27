@@ -28,78 +28,72 @@ export default function Sidebar() {
   // 检查是否为当前路径
   const isSelected = (path: string) => location.pathname === path;
 
-  
-  
-
   return (
     <Box className="sidebar">
       {/* Logo 和欢迎信息 */}
-      <Box sx={{ textAlign: "center", padding: 2 }}>
-        <Typography variant="h6">React CMS</Typography>
+      <Box sx={{ textAlign: "left", padding: "15px 0 0 18px" }}>
+        <Typography variant="h4">React CMS</Typography>
         {auth?.state.isLoggedIn && (
-          <Typography variant="subtitle1">您好，{auth?.state?.user?.name}</Typography>
+          <Typography variant="subtitle1" sx={{ marginTop: 1 }}>
+            您好，{auth?.state?.user?.name}
+          </Typography>
         )}
       </Box>
 
-      <Divider />
 
       {/* 管理菜单 */}
       <List>
+      <Divider />
+
         <ListItem
           button
           component={Link}
           to="/articleManagement"
-          className={isSelected("/articleManagement")?"selectedItem":null}
+          className={isSelected("/articleManagement") ? "selectedItem" : null}
         >
           <ListItemIcon>
             <ArticleIcon />
           </ListItemIcon>
           <ListItemText primary="文章管理" />
         </ListItem>
+        <Divider />
 
         <ListItem
           button
           component={Link}
           to="/personnelManagement"
-          className={isSelected("/personnelManagement")?"selectedItem":null} // 选中状态
+          className={isSelected("/personnelManagement") ? "selectedItem" : null} // 选中状态
         >
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText primary="人员管理" />
         </ListItem>
+        <Divider />
 
         <ListItem
           button
           component={Link}
           to="/categoryManagement"
-          className={isSelected("/categoryManagement")?"selectedItem":null} // 选中状态
+          className={isSelected("/categoryManagement") ? "selectedItem" : null} // 选中状态
         >
           <ListItemIcon>
             <CategoryIcon />
           </ListItemIcon>
           <ListItemText primary="栏目管理" />
         </ListItem>
-      </List>
 
-      <Divider sx={{ marginTop: "auto" }} />
-
-      {/* 登录/登出按钮 */}
-      <List>
-        {auth?.state.isLoggedIn ? (
-          <ListItem button onClick={handleLogout}>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="退出" />
-          </ListItem>
-        ) : (
-          <ListItem button component={Link} to="/login" selected={isSelected("/login")}>
-            <ListItemIcon>
-              <LoginIcon />
-            </ListItemIcon>
-            <ListItemText primary="登录" />
-          </ListItem>
+        <Divider />
+        {auth?.state.isLoggedIn && (
+          <>
+            <ListItem button onClick={handleLogout}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="退出" />
+            </ListItem>
+            <Divider />
+          </>
         )}
       </List>
     </Box>

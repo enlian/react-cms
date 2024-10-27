@@ -2,16 +2,21 @@
 
 このプロジェクトは、Reactをフロントエンドに、Expressをバックエンドに使用したコンテンツ管理システム（CMS）です。データベースにはPostgreSQLを使用しており、セキュアな認証にはJWT (JSON Web Token) を導入しています。管理者およびユーザーの役割を区別したアクセス制御、記事の作成・編集・削除など、コンテンツ管理の基本機能を提供しています。
 
----
+### Screenshots
+
+<img src="./frontend/screenshot/1.png" width="400"/><br/>
+<img src="./frontend/screenshot/2.png" width="400"/><br/><br/>
+<img src="./frontend/screenshot/3.png" width="400"/><br/><br/>
+<img src="./frontend/screenshot/4.png" width="400"/><br/><br/>
 
 ### 技術スタック
 
-- **フロントエンド**: React.js, JavaScript, HTML, CSS, Material-UI
+- **フロントエンド**: React.js, TypeScript, HTML, CSS, Material-UI
 - **バックエンド**: Node.js, Express.js, JWT (JSON Web Token) 認証
 - **データベース**: PostgreSQL
 - **開発ツール**: Vite（フロントエンドビルドツール）, Node Package Manager (npm)
 
----
+
 
 ### 主な機能
 
@@ -34,7 +39,7 @@
    - 管理者と一般ユーザーの役割を区別し、権限に応じた操作を制限。
    - 管理者のみが記事の作成やカテゴリの編集を行えるように制御。
 
----
+
 
 ### プロジェクト構成
 
@@ -65,7 +70,7 @@ backend/
 └── package.json            # プロジェクト依存関係とスクリプト
 ```
 
----
+
 
 ### 環境設定ファイル (.env)
 
@@ -82,7 +87,7 @@ ADMIN_USER="admin"               # 管理者ユーザー名
 ADMIN_PASSWORD="admin123"        # 管理者パスワード
 ```
 
----
+
 
 ### 使用方法
 
@@ -112,13 +117,13 @@ npm install
 npm run dev
 ```
 
----
+
 
 ### アクセス方法
 
 フロントエンドは `http://localhost:3000` でアクセス可能です。バックエンドAPIは `http://localhost:5000/api` で動作しています。
 
----
+
 
 ### データベースの初期セットアップ
 

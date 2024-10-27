@@ -1,6 +1,6 @@
 import { useArticles } from "./../contexts/articleContext";
-import { Article } from "./article";
-import { Typography, CircularProgress, Box } from "@mui/material";
+import { ArticleItem } from "./ArticleItem";
+import { Typography, CircularProgress, Box, Divider } from "@mui/material";
 
 export default function ArticleList() {
   const { isLoading, articles } = useArticles(); // 获取加载状态
@@ -31,8 +31,9 @@ export default function ArticleList() {
 
   return (
     <>
+    <Divider/>
       {articles.map((article) => (
-        <Article key={article.id} article={article} />
+        <ArticleItem key={article.id} article={article} />
       ))}
     </>
   );

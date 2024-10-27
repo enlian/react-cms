@@ -1,5 +1,5 @@
 .sidebar {
-  width: 250px; // 固定侧边栏宽度
+  width: 220px; // 固定侧边栏宽度
   height: 100vh; // 占满整个屏幕高度
   background-color: #f5f5f5; // 背景颜色
   display: flex;
@@ -11,6 +11,4 @@
 
 .selectedItem {
     background-color: #d4d4d4 !important; // 自定义选中背景色
-    color: #1976d2; // 自定义选中文本颜色
-    font-weight: bold;
   }

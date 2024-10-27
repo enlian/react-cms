@@ -10,23 +10,19 @@ import {
   DialogContent,
   DialogTitle,
   Alert,
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Typography,
   List,
   ListItem,
   ListItemText,
-  ListItemAvatar,
-  Avatar,
   IconButton,
   Divider,
+  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CategorySelector } from "./CategorySelector"; // 导入抽出的CategorySelector组件
+import validateCoverUrl from "./../common/utils.js"
 
-export function Article({ article }) {
+export function ArticleItem({ article }) {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(article.title);
   const [content, setContent] = useState(article.content);
@@ -51,9 +47,6 @@ export function Article({ article }) {
     setSuccessMessage("");
     setErrorMessage("");
   };
-
-  const validateCoverUrl = (url) =>
-    /^(http:\/\/|https:\/\/).*\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(url);
 
   const handleTitleChange = (e) => {
     const value = e.target.value;
@@ -84,8 +77,8 @@ export function Article({ article }) {
     }));
   };
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(Number(e.target.value));
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
     setErrors((prev) => ({
       ...prev,
       category: "",
@@ -159,8 +152,11 @@ export function Article({ article }) {
 
   return (
     <>
-      <ListItem alignItems="flex-start" sx={{margin:"10px 0 10px 0",paddingLeft:0}}>
-        {validateCoverUrl(article.cover) ? (
+      <ListItem
+        alignItems="flex-start"
+        sx={{ margin: "10px 0 10px 0", paddingLeft: 0 }}
+      >
+        {validateCoverUrl(article.cover) && (
           <img
             src={validateCoverUrl(article.cover) ? article.cover : ""}
             style={{
@@ -169,35 +165,16 @@ export function Article({ article }) {
               borderRadius: 5,
               marginRight: 10,
               objectFit: "cover",
+              margin: "auto",
+              marginRight: 1,
             }}
           />
-        ) : null}
+        )}
 
         <ListItemText
-          primary={
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis", // 超出部分显示为省略号
-              }}
-            >
-              {article.title}
-            </Typography>
-          }
-          secondary={
-            <>
-              <Typography
-                component="span"
-                variant="body2"
-                sx={{ color: "text.primary", display: "inline" }}
-              >
-                {article.content.slice(0, 100)}...
-              </Typography>
-            </>
-          }
+          sx={validateCoverUrl(article.cover) && { marginLeft: 2 }}
+          primary={article.title}
+          secondary={article.content.slice(0, 100) + "..."}
         />
         <IconButton onClick={() => setIsEditing(true)}>
           <EditIcon />
@@ -206,22 +183,10 @@ export function Article({ article }) {
           <DeleteIcon />
         </IconButton>
       </ListItem>
-      <Divider
-        component="li"
-        sx={{
-          borderColor: "rgba(0, 0, 0, 0.12)",
-          borderBottomWidth: 1,
-          listStyleType: "none",
-        }}
-      />
+      <Divider />
 
       {/* 编辑模态框 */}
-      <Dialog
-        open={isEditing}
-        onClose={() => setIsEditing(false)}
-        disableEnforceFocus
-        disableRestoreFocus
-      >
+      <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
         <DialogTitle>编辑文章</DialogTitle>
         <DialogContent>
           <TextField
@@ -256,29 +221,20 @@ export function Article({ article }) {
             error={!!errors.cover}
             helperText={errors.cover}
           />
+
           <Typography
             variant="subtitle1"
             sx={{ mt: 2, mb: 1, color: !!errors.category ? "red" : "inherit" }}
           >
             请选择所属栏目
           </Typography>
-          <FormControl fullWidth margin="dense">
-            {categories.length && (
-              <RadioGroup
-                value={selectedCategory}
-                onChange={handleCategoryChange}
-              >
-                {categories.map((category) => (
-                  <FormControlLabel
-                    key={category.id}
-                    value={category.id}
-                    control={<Radio />}
-                    label={category.name}
-                  />
-                ))}
-              </RadioGroup>
-            )}
-          </FormControl>
+
+          {/* 使用CategorySelector组件 */}
+          <CategorySelector
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={handleCategoryChange}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsEditing(false)}>取消</Button>

@@ -11,7 +11,7 @@ import Register from "./auth/Register";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 import { CategoriesProvider, CategoriesContext } from "./contexts/CategoriesContext";
 import Sidebar from "./common/Sidebar";
-import CategoryManagement from "./Category/CategoryManagement";
+import CategoryManagement from "./Category/CategoryManagement.jsx";
 import { CircularProgress, Box } from "@mui/material"; // 引入 Material-UI 的加载组件
 import "./../src/assets/App.css"; // 引入CSS文件
 
